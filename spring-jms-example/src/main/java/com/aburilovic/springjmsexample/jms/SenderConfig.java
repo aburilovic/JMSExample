@@ -13,10 +13,15 @@ public class SenderConfig {
     @Value("${spring.activemq.broker-url}")
     private String brokerUrl;
 
+    private static final String BROKER_USERNAME = "admin";
+    private static final String BROKER_PASSWORD = "admin";
+
     @Bean
     public ActiveMQConnectionFactory senderActiveMQConnectionFactory() {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
         activeMQConnectionFactory.setBrokerURL(brokerUrl);
+        activeMQConnectionFactory.setPassword(BROKER_USERNAME);
+        activeMQConnectionFactory.setUserName(BROKER_PASSWORD);
         return activeMQConnectionFactory;
     }
 

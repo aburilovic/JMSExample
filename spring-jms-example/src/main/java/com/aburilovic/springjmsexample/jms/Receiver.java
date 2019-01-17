@@ -4,21 +4,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
 
-import java.util.concurrent.CountDownLatch;
-
 public class Receiver {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(Receiver.class);
 
-    private CountDownLatch latch = new CountDownLatch(1);
-
-    public CountDownLatch getLatch() {
-        return latch;
-    }
+    private String latestMessage = null;
 
     @JmsListener(destination = "helloworld.q")
     public void receive(String message) {
+        latestMessage = message;
         LOGGER.info("**************** received message='{}'", message);
-        latch.countDown();
+    }
+
+    @JmsListener(destination = "ActiveMQ.Advisory.Consumer.Queue.helloworld.q")
+    public void receive2(String message) {
+        latestMessage = message;
+        LOGGER.info("**************** received message 2='{}'", message);
+    }
+
+    public String getLatestMessage() {
+        return latestMessage;
     }
 }

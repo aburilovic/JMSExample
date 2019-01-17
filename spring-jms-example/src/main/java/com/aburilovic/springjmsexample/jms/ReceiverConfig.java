@@ -10,14 +10,16 @@ import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 @Configuration
 @EnableJms
 public class ReceiverConfig {
-    @Value("${spring.activemq.broker-url}")
-    private String brokerUrl;
+//    @Value("${spring.activemq.broker-url}")
+//    private String brokerUrl;
+
+    String BROKER_URL = "tcp://localhost:61616";
 
     @Bean
     public ActiveMQConnectionFactory receiverActiveMQConnectionFactory() {
         ActiveMQConnectionFactory activeMQConnectionFactory =
                 new ActiveMQConnectionFactory();
-        activeMQConnectionFactory.setBrokerURL(brokerUrl);
+        activeMQConnectionFactory.setBrokerURL(BROKER_URL);
 
         return activeMQConnectionFactory;
     }
